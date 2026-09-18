@@ -1,5 +1,5 @@
 #include "AttendanceSession.h"
-
+#include "attendance/AttendanceExceptions.h"
 #include <stdexcept>
 
 using namespace std;
@@ -23,28 +23,28 @@ AttendanceSession::AttendanceSession(
 {
     if (session_ID.empty())
     {
-        throw invalid_argument(
+        throw InvalidAttendanceDataException(
             "Session ID cannot be empty."
         );
     }
 
     if (offering_ID.empty())
     {
-        throw invalid_argument(
+        throw InvalidAttendanceDataException(
             "Offering ID cannot be empty."
         );
     }
 
     if (lecturer_ID.empty())
     {
-        throw invalid_argument(
+        throw InvalidAttendanceDataException(
             "Lecturer ID cannot be empty."
         );
     }
 
     if (duration_minutes <= 0)
     {
-        throw invalid_argument(
+        throw InvalidAttendanceDataException((
             "Session duration must be greater than zero."
         );
     }
