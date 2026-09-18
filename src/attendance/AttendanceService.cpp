@@ -1,5 +1,5 @@
 #include "AttendanceService.h"
-
+#include "attendance/AttendanceExceptions.h"
 #include <stdexcept>
 #include <string>
 
@@ -30,14 +30,14 @@ void AttendanceService::runCapture(
 {
     if (attendance_register == nullptr)
     {
-        throw runtime_error(
+        throw AttendanceException(
             "Attendance register is not available."
         );
     }
 
     if (capture == nullptr)
     {
-        throw runtime_error(
+        throw AttendanceException(
             "Attendance capture method is not selected."
         );
     }
