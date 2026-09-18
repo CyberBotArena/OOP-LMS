@@ -1,5 +1,5 @@
 #include "AttendanceRecord.h"
-
+#include "AttendanceExceptions.h"
 #include <stdexcept>
 
 using namespace std;
@@ -27,19 +27,19 @@ AttendanceRecord::AttendanceRecord(
       reason(reason)
 {
     if (record_ID.empty()) {
-        throw invalid_argument("Record ID cannot be empty.");
+       throw InvalidAttendanceDataException("Record ID cannot be empty.");
     }
 
     if (student_ID.empty()) {
-        throw invalid_argument("Student ID cannot be empty.");
+       throw InvalidAttendanceDataException("Student ID cannot be empty.");
     }
 
     if (session_ID.empty()) {
-        throw invalid_argument("Session ID cannot be empty.");
+        throw InvalidAttendanceDataException("Session ID cannot be empty.");
     }
 
     if (capture_method.empty()) {
-        throw invalid_argument("Capture method cannot be empty.");
+        throw InvalidAttendanceDataException("Capture method cannot be empty.");
     }
 
     // If this is a correction record,
@@ -47,7 +47,7 @@ AttendanceRecord::AttendanceRecord(
     if (!correction_of.empty() &&
         (acting_lecturer_ID.empty() || reason.empty())) {
 
-        throw invalid_argument(
+        throw InvalidAttendanceDataException(
             "Correction requires lecturer ID and reason."
         );
     }
