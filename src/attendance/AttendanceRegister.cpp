@@ -1,5 +1,5 @@
 #include "AttendanceRegister.h"
-
+#include "attendance/AttendanceExceptions.h"
 #include <stdexcept>
 
 using namespace std;
@@ -11,7 +11,7 @@ void AttendanceRegister::addSession(
 {
     if (findSession(session.getId()) != nullptr)
     {
-        throw invalid_argument(
+        throw DuplicateRecordException(
             "A session with this ID already exists."
         );
     }
@@ -26,7 +26,7 @@ void AttendanceRegister::addRecord(
 {
     if (findRecord(record.getRecordID()) != nullptr)
     {
-        throw invalid_argument(
+        throw DuplicateRecordException(
             "A record with this ID already exists."
         );
     }
@@ -37,14 +37,14 @@ void AttendanceRegister::addRecord(
     // Important: check nullptr first
     if (session == nullptr)
     {
-        throw invalid_argument(
+        throw AttendanceNotFoundException(
             "Attendance session does not exist."
         );
     }
 
     if (!session->isOpen())
     {
-        throw runtime_error(
+        throw SessionClosedException(
             "Cannot add attendance to a closed or expired session."
         );
     }
@@ -126,7 +126,7 @@ void AttendanceRegister::closeSession(
 
     if (session == nullptr)
     {
-        throw invalid_argument(
+        throw AttendanceNotFoundException(
             "The attendance session does not exist."
         );
     }
@@ -183,7 +183,7 @@ void AttendanceRegister::appendCorrection(
 
     if (originalRecord == nullptr)
     {
-        throw invalid_argument(
+        throw AttendanceNotFoundException(
             "Original attendance record does not exist."
         );
     }
