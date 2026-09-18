@@ -2,7 +2,7 @@
 
 #include "users/Student.h"
 #include "users/Lecturer.h"
-#include "Course.h"
+#include "courses/Course.h"
 
 #include <stdexcept>
 
@@ -11,11 +11,11 @@ using namespace std;
 
 // Constructor
 CourseOffering::CourseOffering(
-    const string& id,
+    const string& offering_id,
     const string& semester,
     int capacity
 )
-    : offeringId(id),
+    : offeringId(offering_id),
       semester(semester),
       capacity(capacity),
       assignedLecturer(nullptr),
@@ -55,7 +55,7 @@ void CourseOffering::addStudent(Student* student)
     }
 
     if (isStudentEnrolled(
-            to_string(student->getUserId())))
+            student->getUserId()))
     {
         throw runtime_error(
             "Student is already enrolled."
@@ -81,8 +81,7 @@ void CourseOffering::removeStudent(
          it != enrolled.end();
          ++it)
     {
-        if (to_string((*it)->getUserId())
-            == studentId)
+        if ((*it)->getUserId() == studentId)
         {
             enrolled.erase(it);
             return;
@@ -102,8 +101,7 @@ bool CourseOffering::isStudentEnrolled(
     for (const Student* student : enrolled)
     {
         if (student != nullptr &&
-            to_string(student->getUserId())
-                == studentId)
+            student->getUserId() == studentId)
         {
             return true;
         }
@@ -122,16 +120,14 @@ bool CourseOffering::isFull() const
 
 
 // Get offering ID
-const string&
-CourseOffering::getOfferingId() const
+const string& CourseOffering::getOfferingId() const
 {
     return offeringId;
 }
 
 
 // Get semester
-const string&
-CourseOffering::getSemester() const
+const string& CourseOffering::getSemester() const
 {
     return semester;
 }
@@ -167,14 +163,6 @@ CourseOffering::getTimetable() const
 }
 
 
-// Get editable timetable
-Timetable&
-CourseOffering::getTimetable()
-{
-    return timetable;
-}
-
-
 // Replace timetable
 void CourseOffering::setTimetable(
     const Timetable& newTimetable)
@@ -184,16 +172,7 @@ void CourseOffering::setTimetable(
 
 
 // Get attendance register
-AttendanceRegister&
-CourseOffering::getAttendanceRegister()
-{
-    return attendance;
-}
-
-
-// Get read-only attendance register
-const AttendanceRegister&
-CourseOffering::getAttendanceRegister() const
+const AttendanceRegister& CourseOffering::getAttendanceRegister() const
 {
     return attendance;
 }

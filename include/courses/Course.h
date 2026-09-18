@@ -25,13 +25,17 @@ protected:
     std::string code;
     std::string title;
     int credits;
-    int capacity;
-    int enrolledCount;
+    //int capacity;
+    //int enrolledCount;
     std::string lecturerUsername;           // aggregation: reference by identity only
     std::vector<std::string> prerequisites; // composition: owned by this Course
 
 public:
-    Course(const std::string& code, const std::string& title, int credits, int capacity);
+    Course(const std::string& code, 
+           const std::string& title, 
+           int credits
+           //int capacity
+           );
 
     virtual ~Course();
 

@@ -39,20 +39,40 @@ public:
         const std::string& studentId
     );
 
+    bool isStudentEnrolled(
+        const std::string& studentId
+    ) const;
+
     bool isFull() const;
 
-    std::string getOfferingId() const;
-    std::string getSemester() const;
+    const std::string& getOfferingId() const;
+    const std::string& getSemester() const;
     int getCapacity() const;
-    size_t getEnrolledCount() const;
+    std::size_t getEnrolledCount() const;
+
+
+    const std::vector<Student*>&
+    getEnrolledStudents() const;
 
     const Timetable& getTimetable() const;
 
     void setTimetable(
-        const Timetable& tt
+        const Timetable& newTimetable
     );
 
-    AttendanceRegister& getAttendanceRegister();
+    const AttendanceRegister& getAttendanceRegister() const;
+
+    void setLecturer(
+        Lecturer* lecturer
+    );
+
+    Lecturer* getLecturer() const;
+
+    void setCourse(
+        Course* course
+    );
+
+    Course* getCourse() const;
 
     friend std::ostream& operator<<(
         std::ostream& out,

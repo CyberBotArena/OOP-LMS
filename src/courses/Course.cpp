@@ -1,30 +1,37 @@
 #include "Course.h"
 #include <algorithm>
 
-Course::Course(const std::string& code, const std::string& title, int credits, int capacity)
-    : code(code), title(title), credits(credits), capacity(capacity), enrolledCount(0) {}
+Course::Course( const std::string& code, 
+                const std::string& title, 
+                int credits, 
+                //int capacity)
+    : code(code), 
+      title(title), 
+      credits(credits), 
+      //capacity(capacity), 
+      //enrolledCount(0) {}
 
 Course::~Course() {}
 
 const std::string& Course::getCode() const { return code; }
 const std::string& Course::getTitle() const { return title; }
 int Course::getCredits() const { return credits; }
-int Course::getCapacity() const { return capacity; }
-int Course::getEnrolledCount() const { return enrolledCount; }
+//int Course::getCapacity() const { return capacity; }
+//int Course::getEnrolledCount() const { return enrolledCount; }
 const std::string& Course::getLecturerUsername() const { return lecturerUsername; }
 const std::vector<std::string>& Course::getPrerequisites() const { return prerequisites; }
 
-bool Course::hasCapacity() const {
+/*bool Course::hasCapacity() const {
     return enrolledCount < capacity;
-}
+}*/
 
-void Course::incrementEnrolled() {
+/*void Course::incrementEnrolled() {
     if (hasCapacity()) enrolledCount++;
-}
+}*/
 
-void Course::decrementEnrolled() {
+/*void Course::decrementEnrolled() {
     if (enrolledCount > 0) enrolledCount--;
-}
+}*/
 
 void Course::setLecturer(const std::string& newLecturerUsername) {
     lecturerUsername = newLecturerUsername;
