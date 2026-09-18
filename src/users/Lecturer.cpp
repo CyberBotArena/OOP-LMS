@@ -5,9 +5,12 @@
 
 using namespace std;
 
+int Lecturer::next_lecturer_num = 1001;
+
 
 // Constructor
 Lecturer::Lecturer(
+    //const string& user_Id,
     const string& name,
     const string& username,
     const string& password
@@ -23,6 +26,12 @@ Lecturer::~Lecturer()
 }
 
 
+// generate student id
+string Lecturer::generateLecturerId()
+{
+    return "LEC" + to_string(next_lecturer_num++);
+}
+
 // Return role
 string Lecturer::getRole() const
 {
@@ -31,7 +40,7 @@ string Lecturer::getRole() const
 
 
 // Lecturer menu
-void Lecturer::showDashboard() const
+void Lecturer::getMenu() const
 {
     cout << "--- Lecturer Dashboard: "
          << getName()

@@ -5,20 +5,19 @@
 using namespace std;
 
 
-int User::nextId = 1000;
-
-
 // Constructor
 User::User(
-    const string& name,
-    const string& username,
-    const string& password
+    //const std::string& user_Id,
+    const std::string& name,
+    const std::string& user_name,
+    const std::string& password
 )
-    : userId(nextId++),
+    : user_Id(user_Id),
       name(name),
-      username(username),
+      user_name(user_name),
       password(password)
 {
+
     if (name.empty())
     {
         throw invalid_argument(
@@ -26,7 +25,7 @@ User::User(
         );
     }
 
-    if (username.empty())
+    if (user_name.empty())
     {
         throw invalid_argument(
             "Username cannot be empty."
@@ -49,11 +48,10 @@ User::~User()
 
 
 // Get user ID
-int User::getUserId() const
+string User::getUserId() const
 {
-    return userId;
+    return user_Id;
 }
-
 
 // Get name
 const string& User::getName() const
@@ -65,7 +63,7 @@ const string& User::getName() const
 // Get username
 const string& User::getUsername() const
 {
-    return username;
+    return user_name;
 }
 
 
@@ -93,14 +91,14 @@ bool User::checkPassword(
 
 
 // Output operator
-ostream& operator<<(
+/*ostream& operator<<(
     ostream& os,
     const User& user)
 {
     os << "[" << user.getRole() << "] "
-       << "ID: " << user.userId
-       << " | Username: " << user.username
+       << "ID: " << user.user_Id
+       << " | Username: " << user.user_name
        << " | Name: " << user.name;
 
     return os;
-}
+}*/

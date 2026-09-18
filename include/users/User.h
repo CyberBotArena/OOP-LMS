@@ -5,42 +5,41 @@
 #include <string>
 
 class User {
-private:
-    static int nextId;
 
 protected:
-    int userId;
+    std::string user_Id;
     std::string name;
-    std::string username;
+    std::string user_name;
     std::string password;
 
 public:
     User(
+        //const std::string& user_ID,
         const std::string& name,
-        const std::string& username,
+        const std::string& user_name,
         const std::string& password
     );
 
     virtual ~User();
 
-    int getUserId() const;
+    std::string getUserId() const;
     const std::string& getName() const;
     const std::string& getUsername() const;
 
-    void setName(const std::string& newName);
+    void setName(const std::string& new_name);
 
     bool checkPassword(
-        const std::string& attempt
+        const std::string& psswrd
     ) const;
 
     virtual std::string getRole() const = 0;
 
-    virtual void showDashboard() const = 0;
+    virtual void getMenu() const = 0;
 
-    friend std::ostream& operator<<(
+    /*friend std::ostream& operator<<(
         std::ostream& os,
         const User& user
-    );
+    );*/
 };
 
 #endif

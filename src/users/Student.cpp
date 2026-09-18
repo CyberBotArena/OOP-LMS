@@ -5,14 +5,16 @@
 
 using namespace std;
 
+int Student::next_student_num = 1001;
 
 // Constructor
 Student::Student(
+    //const string& user_Id,
     const string& name,
-    const string& username,
+    const string& user_name,
     const string& password
 )
-    : User(name, username, password)
+    : User(name, user_name, password)
 {
 }
 
@@ -22,6 +24,11 @@ Student::~Student()
 {
 }
 
+// generate student id
+string Student::generateStudentId()
+{
+    return "ST" + std::to_string(next_student_num++);
+}
 
 // Return role
 string Student::getRole() const
@@ -31,7 +38,7 @@ string Student::getRole() const
 
 
 // Student menu
-void Student::showDashboard() const
+void Student::getMenu() const
 {
     cout << "--- Student Dashboard: "
          << getName()

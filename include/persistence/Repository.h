@@ -59,7 +59,7 @@ public:
                 "Item was not found."
             );
         }
-
+        delete position->second;
         items.erase(position);
     }
 
@@ -74,6 +74,21 @@ public:
         }
 
         return result;
+    }
+
+    ~Repository()
+    {
+        clear();
+    }
+    
+    void clear()
+    {
+        for (auto& item : items)
+        {
+            delete item.second;
+        }
+    
+        items.clear();
     }
 };
 

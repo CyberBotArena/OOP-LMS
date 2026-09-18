@@ -1,7 +1,7 @@
 #include "CourseOffering.h"
 
-#include "../include/users/Student.h"
-#include "../users/Lecturer.h"
+#include "users/Student.h"
+#include "users/Lecturer.h"
 #include "Course.h"
 
 #include <stdexcept>

@@ -14,11 +14,18 @@ private:
     std::vector<std::string> completedCourses;
 
     Timetable personalTimetable;
+    
+    static int next_student_num;
+
+    static std::string generateStudentId();
+
+
 
 public:
     Student(
+        //const std::string& user_Id,
         const std::string& name,
-        const std::string& username,
+        const std::string& user_name,
         const std::string& password
     );
 
@@ -26,7 +33,7 @@ public:
 
     std::string getRole() const override;
 
-    void showDashboard() const override;
+    void getMenu() const override;
 
 
     // Current enrolments
