@@ -1,9 +1,7 @@
 #include "enrolment/EnrolmentService.h"
 #include "users/Student.h"
 #include "enrolment/CourseOffering.h"
-#include "enrolment/EnrolmentExceptions.h"
-
-#include <stdexcept>
+#include "exceptions/EnrolmentExceptions.h"
 
 using namespace std;
 
@@ -93,9 +91,7 @@ void EnrolmentService::drop(
 
 
     // Remove student from the offering
-    offering.removeStudent(
-        to_string(student.getUserId())
-    );
+    offering.removeStudent(student.getUserId());
 
 
     // Remove offering from student's enrolment list

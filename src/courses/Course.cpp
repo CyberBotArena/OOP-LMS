@@ -3,13 +3,14 @@
 
 Course::Course( const std::string& code, 
                 const std::string& title, 
-                int credits, 
+                int credits )
                 //int capacity)
     : code(code), 
       title(title), 
-      credits(credits), 
-      //capacity(capacity), 
-      //enrolledCount(0) {}
+      credits(credits) 
+      //capacity(capacity)
+      //enrolledCount(0) 
+      {}
 
 Course::~Course() {}
 
@@ -47,10 +48,11 @@ bool Course::requiresPrerequisite(const std::string& courseCode) const {
     return std::find(prerequisites.begin(), prerequisites.end(), courseCode) != prerequisites.end();
 }
 
-std::ostream& operator<<(std::ostream& os, const Course& course) {
+/*std::ostream& operator<<(std::ostream& os, const Course& course) {
     os << "[" << course.getCourseType() << "] "
        << course.code << " - " << course.title
        << " (" << course.credits << " credits, "
        << course.enrolledCount << "/" << course.capacity << " enrolled)";
     return os;
 }
+*/
