@@ -1,0 +1,11 @@
+g++ -std=c++17 -Iinclude `
+tests/main.cpp `
+src/attendance/*.cpp `
+src/capture/*.cpp `
+src/courses/*.cpp `
+src/enrolment/*.cpp `
+src/persistence/*.cpp `
+src/scheduling/*.cpp `
+src/universitySystem/*.cpp `
+src/users/*.cpp `
+-o app.exe

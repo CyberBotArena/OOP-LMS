@@ -39,16 +39,17 @@ string Lecturer::getRole() const
 // Lecturer menu
 void Lecturer::getMenu() const
 {
-    cout << "--- Lecturer Dashboard: "
-         << getName()
-         << " ---\n"
+        cout << "\n================================\n";
+        cout << "       LECTURER MENU\n";
+        cout << "================================\n";
 
-         << "1. View my courses\n"
-         << "2. View enrolment list for a course\n"
-         << "3. Open/close an attendance session\n"
-         << "4. Mark/correct attendance\n"
-         << "5. View attendance reports\n"
-         << "6. Logout\n";
+        cout << "Welcome, " << getName() << "\n\n";
+        cout << "1. View my courses\n"
+             << "2. View enrolment list for a course\n"
+             << "3. Open/close an attendance session\n"
+             << "4. Mark/correct attendance\n"
+             << "5. View attendance reports\n"
+             << "6. Logout\n";
 }
 
 

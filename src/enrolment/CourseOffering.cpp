@@ -154,6 +154,10 @@ CourseOffering::getEnrolledStudents() const
     return enrolled;
 }
 
+Timetable& CourseOffering::getTimetable()
+{
+    return timetable;
+}
 
 // Get read-only timetable
 const Timetable&

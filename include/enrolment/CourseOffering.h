@@ -54,6 +54,7 @@ public:
     const std::vector<Student*>&
     getEnrolledStudents() const;
 
+    Timetable& getTimetable();
     const Timetable& getTimetable() const;
 
     void setTimetable(

@@ -25,13 +25,19 @@ string Administrator::getRole() const {
 }
 
 void Administrator::getMenu() const {
-    cout << "--- Administrator Dashboard: " << getName() << " ---\n"
-              << "1. Create user account\n"
-              << "2. Remove user account\n"
-              << "3. Create course offering\n"
-              << "4. Edit/remove course offering\n"
-              << "5. Generate reports\n"
-              << "6. Logout\n";
+    cout << "\n================================\n";
+        cout << "       ADMINISTRATOR MENU\n";
+        cout << "================================\n";
+
+        cout << "Welcome, " << getName() << "\n\n";
+
+        cout << "1. View all users\n";
+        cout << "2. View all courses\n";
+        cout << "3. View all offerings\n";
+        cout << "4. Create course\n";
+        cout << "5. Create offering\n";
+        cout << "6. Add timetable slot to offering\n";
+        cout << "0. Logout\n";
 }
 
 // Note on "create": creating a NEW Student/Lecturer/Administrator or a new

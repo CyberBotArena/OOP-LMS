@@ -40,16 +40,21 @@ string Student::getRole() const
 // Student menu
 void Student::getMenu() const
 {
-    cout << "--- Student Dashboard: "
-         << getName()
-         << " ---\n"
+    cout << "\n================================\n";
+        cout << "           STUDENT MENU\n";
+        cout << "================================\n";
 
-         << "1. View available courses\n"
-         << "2. Enrol in a course\n"
-         << "3. Drop a course\n"
-         << "4. View my timetable\n"
-         << "5. View my attendance record\n"
-         << "6. Logout\n";
+        cout << "Welcome, "
+        << getName() << '\n';
+
+        cout << "Student ID: "
+        << getUserId() << "\n\n";
+        cout << "1. View available offerings\n";
+        cout << "2. Enrol in an offering\n";
+        cout << "3. View my enrolments\n";
+        cout << "4. View my timetable\n";
+        cout << "0. Logout\n";
+
 }
 
 
