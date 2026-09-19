@@ -1,58 +1,57 @@
 #include "courses/Course.h"
+
 #include <algorithm>
+#include <stdexcept>
 
-Course::Course( const std::string& code, 
-                const std::string& title, 
-                int credits )
-                //int capacity)
-    : code(code), 
-      title(title), 
-      credits(credits) 
-      //capacity(capacity)
-      //enrolledCount(0) 
-      {}
+Course::Course(const std::string& code,
+               const std::string& title,
+               int credits)
+    : code(code), title(title), credits(credits)
+{
+    if (code.empty()) {
+        throw std::invalid_argument("Course code cannot be empty.");
+    }
+    if (title.empty()) {
+        throw std::invalid_argument("Course title cannot be empty.");
+    }
+    if (credits <= 0) {
+        throw std::invalid_argument("Course credits must be greater than zero.");
+    }
+}
 
-Course::~Course() {}
+Course::~Course() = default;
 
 const std::string& Course::getCode() const { return code; }
 const std::string& Course::getTitle() const { return title; }
 int Course::getCredits() const { return credits; }
-//int Course::getCapacity() const { return capacity; }
-//int Course::getEnrolledCount() const { return enrolledCount; }
-//const std::string& Course::getLecturerUsername() const { return lecturerUsername; }
-const std::vector<std::string>& Course::getPrerequisites() const { return prerequisites; }
 
-/*bool Course::hasCapacity() const {
-    return enrolledCount < capacity;
-}*/
-
-/*void Course::incrementEnrolled() {
-    if (hasCapacity()) enrolledCount++;
-}*/
-
-/*void Course::decrementEnrolled() {
-    if (enrolledCount > 0) enrolledCount--;
-}*/
-
-//void Course::setLecturer(const std::string& newLecturerUsername) {
-//    lecturerUsername = newLecturerUsername;
-//}
+const std::vector<std::string>& Course::getPrerequisites() const {
+    return prerequisites;
+}
 
 void Course::addPrerequisite(const std::string& courseCode) {
-    if (std::find(prerequisites.begin(), prerequisites.end(), courseCode) == prerequisites.end()) {
+    if (courseCode.empty()) {
+        throw std::invalid_argument("Prerequisite course code cannot be empty.");
+    }
+
+    if (!requiresPrerequisite(courseCode)) {
         prerequisites.push_back(courseCode);
     }
 }
 
 bool Course::requiresPrerequisite(const std::string& courseCode) const {
-    return std::find(prerequisites.begin(), prerequisites.end(), courseCode) != prerequisites.end();
+    return std::find(prerequisites.begin(), prerequisites.end(), courseCode)
+           != prerequisites.end();
 }
 
-/*std::ostream& operator<<(std::ostream& os, const Course& course) {
+std::ostream& operator<<(std::ostream& os, const Course& course) {
+    // These two calls are polymorphic. The derived implementation is chosen
+    // at runtime even when the object is accessed through Course&.
     os << "[" << course.getCourseType() << "] "
-       << course.code << " - " << course.title
-       << " (" << course.credits << " credits, "
-       << course.enrolledCount << "/" << course.capacity << " enrolled)";
+       << course.getCode() << " - "
+       << course.getTitle() << " ("
+       << course.getCredits() << " credits, weight "
+       << course.gradeWeightMultiplier() << ")";
+
     return os;
 }
-*/

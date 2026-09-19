@@ -29,8 +29,12 @@ private:
     void viewMyTimetable(const Student& student) const;
 
     void viewLecturerCourses(const Lecturer& lecturer) const;
-    void viewOfferingEnrolments(const Lecturer& lecturer) const;
+    void viewEnrolmentList(const Lecturer& lecturer)const;
+    //void viewOfferingEnrolments(const Lecturer& lecturer) const;
     void viewAttendanceReport(const Lecturer& lecturer) const;
+
+    void manageAttendanceRecords(Lecturer& lecturer);
+    void manageAttendanceSession(Lecturer& lecturer);
 
     void viewAllUsers() const;
     void viewAllCourses() const;

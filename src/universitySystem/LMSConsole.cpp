@@ -12,6 +12,10 @@
 #include "courses/LectureCourse.h"
 #include "enrolment/CourseOffering.h"
 #include "scheduling/Timeslot.h"
+#include "attendance/AttendanceSession.h"
+#include "attendance/AttendanceRegister.h"
+#include "attendance/AttendanceService.h"
+#include "capture/FileReplayCapture.h"
 
 using namespace std;
 
@@ -167,23 +171,115 @@ void LMSConsole::viewMyTimetable(const Student& student) const
              << " - " << minutesToTime(slot.getEndMinutes()) << " | " << slot.getLocation() << '\n';
 }
 
+
 void LMSConsole::viewLecturerCourses(const Lecturer& lecturer) const
 {
-    cout << "\n================================\n        MY COURSE OFFERINGS\n================================\n";
+    cout << "\n================================\n";
+    cout << "          MY COURSES\n";
+    cout << "================================\n";
+
     bool found = false;
+
     for (CourseOffering* offering : system.getOfferings())
     {
-        if (offering->getLecturer() != &lecturer) continue;
-        found = true;
-        cout << offering->getOfferingId();
-        if (offering->getCourse())
-            cout << " | " << offering->getCourse()->getCode() << " - " << offering->getCourse()->getTitle();
-        cout << " | " << offering->getSemester() << '\n';
+        if (offering->getLecturer() == &lecturer)
+        {
+            found = true;
+
+            cout << "\nOffering ID: "
+                 << offering->getOfferingId() << '\n';
+
+            if (offering->getCourse() != nullptr)
+            {
+                cout << "Course: "
+                     << offering->getCourse()->getCode()
+                     << " - "
+                     << offering->getCourse()->getTitle()
+                     << '\n';
+            }
+
+            cout << "Semester: "
+                 << offering->getSemester() << '\n';
+
+            cout << "Capacity: "
+                 << offering->getCapacity() << '\n';
+
+            cout << "------------------------------\n";
+        }
     }
-    if (!found) cout << "No course offerings are assigned to you.\n";
+
+    if (!found)
+    {
+        cout << "No courses are currently assigned to you.\n";
+    }
 }
 
-void LMSConsole::viewOfferingEnrolments(const Lecturer& lecturer) const
+void LMSConsole::viewEnrolmentList(const Lecturer& lecturer) const
+{
+    string offeringId;
+
+    cout << "\n================================\n";
+    cout << "       VIEW ENROLMENT LIST\n";
+    cout << "================================\n";
+
+    cout << "Enter offering ID: ";
+    cin >> offeringId;
+
+    CourseOffering* offering =
+        system.findOffering(offeringId);
+
+    if (offering == nullptr)
+    {
+        cout << "Offering not found.\n";
+        return;
+    }
+
+    // Make sure this offering belongs to the logged-in lecturer
+    if (offering->getLecturer() != &lecturer)
+    {
+        cout << "This offering is not assigned to you.\n";
+        return;
+    }
+
+    cout << "\nOffering: "
+         << offering->getOfferingId()
+         << '\n';
+
+    if (offering->getCourse() != nullptr)
+    {
+        cout << "Course: "
+             << offering->getCourse()->getCode()
+             << " - "
+             << offering->getCourse()->getTitle()
+             << '\n';
+    }
+
+    cout << "\nEnrolled Students\n";
+    cout << "------------------------------\n";
+
+    const vector<Student*>& students =
+        offering->getEnrolledStudents();
+
+    if (students.empty())
+    {
+        cout << "No students are enrolled in this offering.\n";
+        return;
+    }
+
+    for (Student* student : students)
+    {
+        if (student != nullptr)
+        {
+            cout << "Student ID: "
+                 << student->getUserId()
+                 << " | Name: "
+                 << student->getName()
+                 << '\n';
+        }
+    }
+}
+
+/*void LMSConsole::viewOfferingEnrolments(const Lecturer& lecturer) const
 {
     string offeringId;
     cout << "Offering ID: ";
@@ -199,6 +295,228 @@ void LMSConsole::viewOfferingEnrolments(const Lecturer& lecturer) const
     if (students.empty()) { cout << "No students are enrolled.\n"; return; }
     for (const Student* student : students)
         cout << student->getUserId() << " | " << student->getName() << '\n';
+}*/
+
+void LMSConsole::manageAttendanceSession(Lecturer& lecturer)
+{
+    string offeringId;
+
+    cout << "\n================================\n";
+    cout << "       ATTENDANCE SESSION\n";
+    cout << "================================\n";
+
+    cout << "Offering ID: ";
+    cin >> offeringId;
+
+    CourseOffering* offering =
+        system.findOffering(offeringId);
+
+    if (offering == nullptr)
+    {
+        cout << "Offering not found.\n";
+        return;
+    }
+
+    if (offering->getLecturer() != &lecturer)
+    {
+        cout << "This offering is not assigned to you.\n";
+        return;
+    }
+
+    cout << "\n1. Open attendance session\n";
+    cout << "2. Close attendance session\n";
+    cout << "0. Back\n";
+    cout << "Enter choice: ";
+
+    int choice;
+
+    if (!readInteger(choice))
+    {
+        cout << "Invalid input.\n";
+        return;
+    }
+
+    AttendanceRegister& attendance = offering->getAttendanceRegister();
+
+    try
+    {
+        if (choice == 1)
+        {
+            string sessionId;
+            int duration;
+
+            cout << "Session ID: ";
+            cin >> sessionId;
+
+            const vector<TimeSlot>& slots =
+                offering->getTimetable().getSlots();
+
+            if (slots.empty())
+            {
+                cout << "No timetable slot exists for this offering.\n";
+                return;
+            }
+
+            // For now use the first timetable slot
+            const TimeSlot& slot = slots[0];
+
+            cout << "Duration in minutes: ";
+
+            if (!readInteger(duration) || duration <= 0)
+            {
+                cout << "Invalid duration.\n";
+                return;
+            }
+
+            AttendanceSession session(
+                sessionId,
+                offering->getOfferingId(),
+                lecturer.getUserId(),
+                slot,
+                duration
+            );
+
+            // REUSE YOUR EXISTING FUNCTION
+            attendance.addSession(session);
+
+            cout << "Attendance session opened successfully.\n";
+        }
+        else if (choice == 2)
+        {
+            string sessionId;
+
+            cout << "Session ID: ";
+            cin >> sessionId;
+
+            // REUSE YOUR EXISTING FUNCTION
+            attendance.closeSession(sessionId);
+
+            cout << "Attendance session closed successfully.\n";
+        }
+        else if (choice != 0)
+        {
+            cout << "Invalid choice.\n";
+        }
+    }
+    catch (const exception& e)
+    {
+        // DuplicateRecordException,
+        // AttendanceNotFoundException, etc.
+        // are handled here.
+        cout << "Attendance operation failed: "
+             << e.what() << '\n';
+    }
+}
+
+void LMSConsole::manageAttendanceRecords(Lecturer& lecturer)
+{
+    string offeringId;
+    cout << "\nOffering ID: ";
+    cin >> offeringId;
+    CourseOffering* offering = system.findOffering(offeringId);
+    if (offering == nullptr || offering->getLecturer() != &lecturer)
+    {
+        cout << "Offering not found or not assigned to you.\n";
+        return;
+    }
+
+    AttendanceRegister& attendance = offering->getAttendanceRegister();
+    cout << "\n1. Mark attendance using file replay\n";
+    cout << "2. Correct an attendance record\n";
+    cout << "0. Back\nEnter choice: ";
+    int choice;
+    if (!readInteger(choice))
+    {
+        cout << "Invalid input.\n";
+        return;
+    }
+    if (choice == 0) return;
+
+    try
+    {
+        if (choice == 1)
+        {
+            string sessionId, filePath;
+            cout << "Session ID: ";
+            cin >> sessionId;
+            AttendanceSession* session = attendance.findSession(sessionId);
+            if (session == nullptr || !session->isOpen())
+            {
+                cout << "Session not found, closed, or expired.\n";
+                return;
+            }
+            cout << "Attendance file path: ";
+            cin >> ws;
+            getline(cin, filePath);
+            FileReplayCapture capture(filePath);
+            AttendanceService service(&attendance);
+            service.setCapture(&capture);
+            service.runCapture(*session);
+            cout << "File replay completed.\n";
+        }
+        else if (choice == 2)
+        {
+            const vector<AttendanceRecord>& records = attendance.getRecords();
+            if (records.empty())
+            {
+                cout << "No attendance records to correct.\n";
+                return;
+            }
+            cout << "\nExisting records:\n";
+            for (const AttendanceRecord& record : records)
+            {
+                cout << record.getRecordID() << " | Student: "
+                     << record.getStudentID() << " | Session: "
+                     << record.getSessionID() << '\n';
+            }
+            string originalId, newId, reason;
+            int statusChoice;
+            cout << "Original record ID: ";
+            cin >> originalId;
+            const AttendanceRecord* original = attendance.findRecord(originalId);
+            if (original == nullptr)
+            {
+                cout << "Original record not found.\n";
+                return;
+            }
+            const AttendanceSession* session = attendance.findSession(original->getSessionID());
+            if (session == nullptr || !session->isOpen())
+            {
+                cout << "The original session is closed or expired.\n";
+                return;
+            }
+            cout << "New correction record ID: ";
+            cin >> newId;
+            cout << "1. Present  2. Absent  3. Late  4. Excused\nStatus: ";
+            if (!readInteger(statusChoice) || statusChoice < 1 || statusChoice > 4)
+            {
+                cout << "Invalid status.\n";
+                return;
+            }
+            cout << "Correction reason: ";
+            cin >> ws;
+            getline(cin, reason);
+            AttendanceStatus status = AttendanceStatus::Present;
+            switch (statusChoice)
+            {
+                case 2: status = AttendanceStatus::Absent; break;
+                case 3: status = AttendanceStatus::Late; break;
+                case 4: status = AttendanceStatus::Excused; break;
+                default: break;
+            }
+            attendance.appendCorrection(newId, originalId, status,
+                                        lecturer.getUserId(), reason);
+            cout << "Correction recorded successfully.\n";
+        }
+        else
+        {
+            cout << "Invalid choice.\n";
+        }
+    }
+    catch (const exception& e)
+    {
+        cout << "Attendance operation failed: " << e.what() << '\n';
+    }
 }
 
 void LMSConsole::viewAttendanceReport(const Lecturer& lecturer) const
@@ -341,14 +659,14 @@ void LMSConsole::runLecturerMenu(Lecturer& lecturer)
         if (!readInteger(choice)) { if (cin.eof()) { system.logout(); return; } cout << "Invalid input.\n"; continue; }
         switch (choice)
         {
-            case 1: viewLecturerCourses(lecturer); break;
-            case 2: viewOfferingEnrolments(lecturer); break;
+            case 1:
+            viewLecturerCourses(lecturer);
+            break;            
+            case 2: viewEnrolmentList(lecturer); break;
             case 3:
-                cout << "Attendance session creation/closing needs a writable AttendanceRegister accessor in CourseOffering.\n";
-                break;
-            case 4:
-                cout << "Attendance marking/correction needs a writable AttendanceRegister accessor in CourseOffering.\n";
-                break;
+            manageAttendanceSession(lecturer);
+            break;
+            case 4: manageAttendanceRecords(lecturer); break;
             case 5: viewAttendanceReport(lecturer); break;
             case 6: system.logout(); cout << "Logged out successfully.\n"; break;
             default: cout << "Invalid menu choice.\n";

@@ -170,7 +170,7 @@ void UniversitySystem::save()
         );
     }
 
-    storage->saveAll();
+    storage->saveAll(*this);
 }
 
 
@@ -184,7 +184,7 @@ void UniversitySystem::load()
         );
     }
 
-    storage->loadAll();
+    storage->loadAll(*this);
 }
 
 std::vector<CourseOffering*> UniversitySystem::getOfferings() const

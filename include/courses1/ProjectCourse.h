@@ -3,16 +3,13 @@
 
 #include "courses/Course.h"
 
+// Project-based course: group work, graded mostly on the final deliverable.
 class ProjectCourse : public Course {
 private:
     int groupSize;
 
 public:
-    ProjectCourse(const std::string& code,
-                  const std::string& title,
-                  int credits,
-                  int groupSize);
-
+    ProjectCourse(const std::string& code, const std::string& title, int credits, int groupSize);
     ~ProjectCourse() override;
 
     int getGroupSize() const;
@@ -21,4 +18,4 @@ public:
     double gradeWeightMultiplier() const override;
 };
 
-#endif
+#endif // PROJECTCOURSE_H

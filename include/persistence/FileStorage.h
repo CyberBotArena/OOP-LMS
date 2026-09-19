@@ -5,6 +5,8 @@
 
 #include "persistence/Storage.h"
 
+class UniversitySystem;
+
 class FileStorage : public Storage {
 private:
     std::string base_path;
@@ -14,9 +16,9 @@ public:
         const std::string& path
     );
 
-    void saveAll() override;
+    void saveAll(UniversitySystem& system) override;
 
-    void loadAll() override;
+    void loadAll(UniversitySystem& system) override;
 
     const std::string& getBasePath() const;
 };

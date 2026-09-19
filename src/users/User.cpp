@@ -73,6 +73,11 @@ const string& User::getUsername() const
     return user_name;
 }
 
+const string& User::getPassword() const
+{
+    return password;
+}
+
 
 // Change name
 void User::setName(

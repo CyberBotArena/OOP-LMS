@@ -51,8 +51,7 @@ public:
     std::size_t getEnrolledCount() const;
 
 
-    const std::vector<Student*>&
-    getEnrolledStudents() const;
+    const std::vector<Student*>& getEnrolledStudents() const;
 
     Timetable& getTimetable();
     const Timetable& getTimetable() const;
@@ -62,6 +61,7 @@ public:
     );
 
     const AttendanceRegister& getAttendanceRegister() const;
+    AttendanceRegister& getAttendanceRegister() ;
 
     void setLecturer(
         Lecturer* lecturer

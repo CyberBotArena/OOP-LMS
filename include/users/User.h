@@ -25,6 +25,7 @@ public:
     std::string getUserId() const;
     const std::string& getName() const;
     const std::string& getUsername() const;
+    const std::string& getPassword() const;
 
     void setName(const std::string& new_name);
 

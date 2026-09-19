@@ -1,0 +1,18 @@
+[USERS]
+Student|U1001|Kamal Perera|kamal|1234
+Lecturer|U1002|Nimal Silva|nimal|1234
+Administrator|U1003|Admin User|admin|admin123
+
+[COURSES]
+Lecture|CS101|Programming Fundamentals|3|
+
+[OFFERINGS]
+OFF001|Semester 1 - 2026|30|CS101|U1002
+
+[TIMETABLES]
+
+[ENROLMENTS]
+
+[ATTENDANCE_SESSIONS]
+
+[ATTENDANCE_RECORDS]

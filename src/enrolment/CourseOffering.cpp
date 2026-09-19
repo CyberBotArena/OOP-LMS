@@ -181,6 +181,11 @@ const AttendanceRegister& CourseOffering::getAttendanceRegister() const
     return attendance;
 }
 
+AttendanceRegister& CourseOffering::getAttendanceRegister() 
+{
+    return attendance;
+}
+
 
 // Assign lecturer
 void CourseOffering::setLecturer(

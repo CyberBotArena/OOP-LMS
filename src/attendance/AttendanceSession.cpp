@@ -84,3 +84,25 @@ void AttendanceSession::close()
 {
     open = false;
 }
+
+const string& AttendanceSession::getLecturerId() const
+{
+    return open_by_lecturer_ID;
+}
+
+const TimeSlot& AttendanceSession::getSlot() const
+{
+    return slot;
+}
+
+chrono::system_clock::time_point
+AttendanceSession::getOpenedAt() const
+{
+    return opened_at;
+}
+
+chrono::system_clock::time_point
+AttendanceSession::getExpiresAt() const
+{
+    return expires_at;
+}

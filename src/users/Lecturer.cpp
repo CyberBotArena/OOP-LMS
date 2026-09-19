@@ -49,7 +49,7 @@ void Lecturer::getMenu() const
              << "3. Open/close an attendance session\n"
              << "4. Mark/correct attendance\n"
              << "5. View attendance reports\n"
-             << "6. Logout\n";
+             << "0. Logout\n";
 }
 
 
