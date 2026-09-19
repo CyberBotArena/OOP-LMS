@@ -1,4 +1,4 @@
-#include "User.h"
+#include "users/User.h"
 
 #include <stdexcept>
 
@@ -7,7 +7,7 @@ using namespace std;
 
 // Constructor
 User::User(
-    //const std::string& user_Id,
+    const std::string& user_Id,
     const std::string& name,
     const std::string& user_name,
     const std::string& password
@@ -18,6 +18,13 @@ User::User(
       password(password)
 {
 
+    if (user_Id.empty())
+    {
+        throw invalid_argument(
+            "User ID cannot be empty."
+        );
+    }
+    
     if (name.empty())
     {
         throw invalid_argument(

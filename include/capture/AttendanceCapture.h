@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "../attendance/AttendanceSession.h"
+#include "attendance/AttendanceSession.h"
 
 class AttendanceCapture {
 public:

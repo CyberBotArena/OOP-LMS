@@ -1,8 +1,8 @@
 #ifndef STUDENT_H
 #define STUDENT_H
 
-#include "User.h"
-#include "../scheduling/Timetable.h"
+#include "users/User.h"
+#include "scheduling/Timetable.h"
 
 #include <string>
 #include <vector>
@@ -15,15 +15,15 @@ private:
 
     Timetable personalTimetable;
     
-    static int next_student_num;
+    //static int next_student_num;
 
-    static std::string generateStudentId();
+    //static std::string generateStudentId();
 
 
 
 public:
     Student(
-        //const std::string& user_Id,
+        const std::string& user_Id,
         const std::string& name,
         const std::string& user_name,
         const std::string& password

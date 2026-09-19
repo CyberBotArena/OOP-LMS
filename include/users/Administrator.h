@@ -1,8 +1,8 @@
 #ifndef ADMINISTRATOR_H
 #define ADMINISTRATOR_H
 
-#include "User.h"
-#include "Course.h"
+#include "users/User.h"
+#include "courses/Course.h"
 #include <vector>
 #include <memory>
 #include <string>
@@ -18,11 +18,12 @@
  */
 class Administrator : public User {
 private:
-    static int next_admin_num;
+    //static int next_admin_num;
 
-    static std::string generateAdminId();
+    //static std::string generateAdminId();
 public:
-    Administrator(//const std::string& user_Id, 
+    Administrator(
+        const std::string& user_Id, 
         const std::string& name, 
         const std::string& username, 
         const std::string& password);

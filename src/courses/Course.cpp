@@ -1,4 +1,4 @@
-#include "Course.h"
+#include "courses/Course.h"
 #include <algorithm>
 
 Course::Course( const std::string& code, 
@@ -19,7 +19,7 @@ const std::string& Course::getTitle() const { return title; }
 int Course::getCredits() const { return credits; }
 //int Course::getCapacity() const { return capacity; }
 //int Course::getEnrolledCount() const { return enrolledCount; }
-const std::string& Course::getLecturerUsername() const { return lecturerUsername; }
+//const std::string& Course::getLecturerUsername() const { return lecturerUsername; }
 const std::vector<std::string>& Course::getPrerequisites() const { return prerequisites; }
 
 /*bool Course::hasCapacity() const {
@@ -34,9 +34,9 @@ const std::vector<std::string>& Course::getPrerequisites() const { return prereq
     if (enrolledCount > 0) enrolledCount--;
 }*/
 
-void Course::setLecturer(const std::string& newLecturerUsername) {
-    lecturerUsername = newLecturerUsername;
-}
+//void Course::setLecturer(const std::string& newLecturerUsername) {
+//    lecturerUsername = newLecturerUsername;
+//}
 
 void Course::addPrerequisite(const std::string& courseCode) {
     if (std::find(prerequisites.begin(), prerequisites.end(), courseCode) == prerequisites.end()) {

@@ -3,8 +3,8 @@
 
 #include <string>
 
-#include "AttendanceCapture.h"
-#include "ConsoleCardReader.h"
+#include "capture/AttendanceCapture.h"
+#include "capture/ConsoleCardReader.h"
 
 class CardTapCapture : public AttendanceCapture {
 private:

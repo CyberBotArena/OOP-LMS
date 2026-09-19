@@ -1,27 +1,24 @@
-#include "Administrator.h"
+#include "users/Administrator.h"
 #include <algorithm>
 #include <iostream>
 
 using namespace std;
 
-int Administrator::next_admin_num = 1001;
-
-
 Administrator::Administrator(
 
-    //const string& user_Id, 
+    const string& user_Id, 
     const string& name, 
     const string& username, 
     const string& password)
-    : User(name, username, password) {}
+    : User(user_Id, name, username, password) {}
 
 Administrator::~Administrator() {}
 
 // generate student id
-string Administrator::generateAdminId()
+/*string Administrator::generateAdminId()
 {
     return "ADM" + std::to_string(next_admin_num++);
-}
+}*/
 
 string Administrator::getRole() const {
     return "Administrator";

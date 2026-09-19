@@ -4,7 +4,7 @@
 #include <chrono>
 #include <string>
 
-#include "../scheduling/Timeslot.h"
+#include "scheduling/Timeslot.h"
 
 class AttendanceSession {
 private:

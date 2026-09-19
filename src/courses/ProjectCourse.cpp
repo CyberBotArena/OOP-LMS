@@ -1,7 +1,7 @@
-#include "ProjectCourse.h"
+#include "courses/ProjectCourse.h"
 
-ProjectCourse::ProjectCourse(const std::string& code, const std::string& title, int credits, int capacity, int groupSize)
-    : Course(code, title, credits, capacity), groupSize(groupSize) {}
+ProjectCourse::ProjectCourse(const std::string& code, const std::string& title, int credits, int groupSize)
+    : Course(code, title, credits), groupSize(groupSize) {}
 
 ProjectCourse::~ProjectCourse() {}
 

@@ -1,7 +1,7 @@
-#include "LectureCourse.h"
+#include "courses/LectureCourse.h"
 
-LectureCourse::LectureCourse(const std::string& code, const std::string& title, int credits, int capacity)
-    : Course(code, title, credits, capacity) {}
+LectureCourse::LectureCourse(const std::string& code, const std::string& title, int credits)
+    : Course(code, title, credits) {}
 
 LectureCourse::~LectureCourse() {}
 

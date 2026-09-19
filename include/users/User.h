@@ -14,7 +14,7 @@ protected:
 
 public:
     User(
-        //const std::string& user_ID,
+        const std::string& user_ID,
         const std::string& name,
         const std::string& user_name,
         const std::string& password

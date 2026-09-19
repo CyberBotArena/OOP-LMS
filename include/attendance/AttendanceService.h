@@ -1,8 +1,8 @@
 #ifndef ATTENDANCE_SERVICE_H
 #define ATTENDANCE_SERVICE_H
 
-#include "AttendanceRegister.h"
-#include "../capture/AttendanceCapture.h"
+#include "attendance/AttendanceRegister.h"
+#include "capture/AttendanceCapture.h"
 
 class AttendanceService {
 private:

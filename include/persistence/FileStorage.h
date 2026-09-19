@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "Storage.h"
+#include "persistence/Storage.h"
 
 class FileStorage : public Storage {
 private:

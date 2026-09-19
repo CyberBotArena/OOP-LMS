@@ -51,7 +51,7 @@ void EnrolmentService::enrol(
     if (student.getPersonalTimetable().clashWith(
             offering.getTimetable()))
     {
-        throw ScheduleClashException(
+        throw TimetableClashException(
             "Course timetable clashes with the student's timetable."
         );
     }

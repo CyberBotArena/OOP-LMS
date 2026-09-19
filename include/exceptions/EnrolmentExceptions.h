@@ -1,22 +1,61 @@
 #ifndef ENROLMENT_EXCEPTIONS_H
 #define ENROLMENT_EXCEPTIONS_H
 
-#include <stdexcept>
-#include <string>
+#include "exceptions/UniversityException.h"
 
-class CourseFullException : public std::runtime_error {
+
+// Base class for all enrolment-related errors
+class EnrolmentException : public UniversityException
+{
 public:
-    explicit CourseFullException(const std::string& msg) : std::runtime_error(msg) {}
+    explicit EnrolmentException(const std::string& message)
+        : UniversityException(message)
+    {
+    }
 };
 
-class ScheduleClashException : public std::runtime_error {
+
+// Course offering has no available space
+class CourseFullException : public EnrolmentException
+{
 public:
-    explicit ScheduleClashException(const std::string& msg) : std::runtime_error(msg) {}
+    explicit CourseFullException(const std::string& message)
+        : EnrolmentException(message)
+    {
+    }
 };
 
-class AlreadyEnrolledException : public std::runtime_error {
+
+// Student is already enrolled
+class AlreadyEnrolledException : public EnrolmentException
+{
 public:
-    explicit AlreadyEnrolledException(const std::string& msg) : std::runtime_error(msg) {}
+    explicit AlreadyEnrolledException(const std::string& message)
+        : EnrolmentException(message)
+    {
+    }
+};
+
+
+// Student has not completed a required course
+class PrerequisiteNotMetException : public EnrolmentException
+{
+public:
+    explicit PrerequisiteNotMetException(const std::string& message)
+        : EnrolmentException(message)
+    {
+    }
+};
+
+
+// New offering clashes with student's timetable
+class TimetableClashException : public EnrolmentException
+{
+public:
+    explicit TimetableClashException(const std::string& message)
+        : EnrolmentException(message)
+    {
+    }
 };
 
 #endif

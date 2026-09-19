@@ -5,8 +5,8 @@
 #include <string>
 #include <vector>
 
-#include "../scheduling/Timetable.h"
-#include "../attendance/AttendanceRegister.h"
+#include "scheduling/Timetable.h"
+#include "attendance/AttendanceRegister.h"
 
 class Student;
 class Lecturer;

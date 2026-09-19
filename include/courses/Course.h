@@ -43,16 +43,16 @@ public:
     const std::string& getCode() const;
     const std::string& getTitle() const;
     int getCredits() const;
-    int getCapacity() const;
-    int getEnrolledCount() const;
-    const std::string& getLecturerUsername() const;
+    //int getCapacity() const;
+    //int getEnrolledCount() const;
+    //const std::string& getLecturerUsername() const;
     const std::vector<std::string>& getPrerequisites() const;
 
     // --- behaviour ---
-    bool hasCapacity() const;
-    void incrementEnrolled();
-    void decrementEnrolled();
-    void setLecturer(const std::string& lecturerUsername);
+    //bool hasCapacity() const;
+    //void incrementEnrolled();
+    //void decrementEnrolled();
+    //void setLecturer(const std::string& lecturerUsername);
     void addPrerequisite(const std::string& courseCode);
     bool requiresPrerequisite(const std::string& courseCode) const;
 

@@ -1,4 +1,4 @@
-#include "CourseOffering.h"
+#include "enrolment/CourseOffering.h"
 
 #include "users/Student.h"
 #include "users/Lecturer.h"

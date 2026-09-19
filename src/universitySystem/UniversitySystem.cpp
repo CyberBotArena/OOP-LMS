@@ -1,18 +1,32 @@
-#include "UniversitySystem.h"
+#include "universitySystem/UniversitySystem.h"
 
 #include <stdexcept>
 
 using namespace std;
 
 
+// Default constructor
+UniversitySystem::UniversitySystem()
+    : UniversitySystem(nullptr)
+{
+}
+
+
 // Constructor
 UniversitySystem::UniversitySystem(
     Storage* storage_pointer)
     : storage(storage_pointer),
-      current_user(nullptr)
+      current_user(nullptr),
+      nextUserId(1001)
 {
 }
 
+
+// Generate an ID for a new user
+string UniversitySystem::generateUserId()
+{
+    return "U" + to_string(nextUserId++);
+}
 
 // Add user
 void UniversitySystem::addUser(User* user)
@@ -24,7 +38,7 @@ void UniversitySystem::addUser(User* user)
         );
     }
 
-    users.add(user->getId(), user);
+    users.add(user->getUserId(), user);
 }
 
 
@@ -72,6 +86,12 @@ Course* UniversitySystem::findCourse(
     return courses.find(course_code);
 }
 
+std::vector<Course*> UniversitySystem::getCourses() const
+{
+    return courses.getAll();
+}
+
+
 
 // Add course offering
 void UniversitySystem::addOffering(
@@ -96,6 +116,33 @@ CourseOffering* UniversitySystem::findOffering(
     const string& offering_id) const
 {
     return offerings.find(offering_id);
+}
+
+User* UniversitySystem::login(
+    const std::string& userId,
+    const std::string& password)
+{
+    User* user = users.find(userId);
+
+    if (user == nullptr)
+    {
+        return nullptr;
+    }
+
+    if (!user->checkPassword(password))
+    {
+        return nullptr;
+    }
+
+    current_user = user;
+
+    return current_user;
+}
+
+
+void UniversitySystem::logout()
+{
+    current_user = nullptr;
 }
 
 
@@ -138,4 +185,9 @@ void UniversitySystem::load()
     }
 
     storage->loadAll();
+}
+
+std::vector<CourseOffering*> UniversitySystem::getOfferings() const
+{
+    return offerings.getAll();
 }

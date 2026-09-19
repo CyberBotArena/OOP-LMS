@@ -40,9 +40,7 @@ public:
 
         if (position == items.end())
         {
-            throw std::runtime_error(
-                "Item was not found."
-            );
+            return nullptr;
         }
 
         return position->second;

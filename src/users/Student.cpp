@@ -1,20 +1,20 @@
-#include "Student.h"
+#include "users/Student.h"
 
 #include <algorithm>
 #include <iostream>
 
 using namespace std;
 
-int Student::next_student_num = 1001;
+//int Student::next_student_num = 1001;
 
 // Constructor
 Student::Student(
-    //const string& user_Id,
+    const string& user_Id,
     const string& name,
     const string& user_name,
     const string& password
 )
-    : User(name, user_name, password)
+    : User(user_Id, name, user_name, password)
 {
 }
 
@@ -25,10 +25,10 @@ Student::~Student()
 }
 
 // generate student id
-string Student::generateStudentId()
+/*string Student::generateStudentId()
 {
     return "ST" + std::to_string(next_student_num++);
-}
+}*/
 
 // Return role
 string Student::getRole() const

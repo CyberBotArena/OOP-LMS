@@ -1,4 +1,4 @@
-#include "Timetable.h"
+#include "scheduling/Timetable.h"
 
 using namespace std;
 
@@ -8,6 +8,20 @@ void Timetable::addSlot(const TimeSlot& slot)
 {
     slots.push_back(slot);
 }
+
+/*void removeSlot(const TimeSlot& slot)
+{
+    auto it = find(
+        slots.begin(),
+        slots.end(),
+        slot
+    );
+
+    if (it != slots.end())
+    {
+        slots.erase(it);
+    }
+}*/
 
 
 // Return all time slots

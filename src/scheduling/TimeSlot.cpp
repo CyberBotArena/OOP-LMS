@@ -1,4 +1,4 @@
-#include "Timeslot.h"
+#include "scheduling/Timeslot.h"
 
 #include <stdexcept>
 

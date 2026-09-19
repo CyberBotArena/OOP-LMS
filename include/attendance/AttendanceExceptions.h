@@ -18,4 +18,22 @@ public:
         : AttendanceException(message) {}
 };
 
+class DuplicateRecordException : public AttendanceException {
+public:
+    explicit DuplicateRecordException(const std::string& message)
+        : AttendanceException(message) {}
+};
+
+class AttendanceNotFoundException : public AttendanceException {
+public:
+    explicit AttendanceNotFoundException(const std::string& message)
+        : AttendanceException(message) {}
+};
+
+class SessionClosedException : public AttendanceException {
+public:
+    explicit SessionClosedException(const std::string& message)
+        : AttendanceException(message) {}
+};
+
 #endif

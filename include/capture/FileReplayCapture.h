@@ -4,7 +4,7 @@
 #include <fstream>
 #include <string>
 
-#include "AttendanceCapture.h"
+#include "capture/AttendanceCapture.h"
 
 class FileReplayCapture : public AttendanceCapture {
 private:

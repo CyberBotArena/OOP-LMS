@@ -1,4 +1,4 @@
-#include "AttendanceRegister.h"
+#include "attendance/AttendanceRegister.h"
 #include "attendance/AttendanceExceptions.h"
 #include <stdexcept>
 

@@ -4,8 +4,8 @@
 #include <string>
 #include <vector>
 
-#include "AttendanceRecord.h"
-#include "AttendanceSession.h"
+#include "attendance/AttendanceRecord.h"
+#include "attendance/AttendanceSession.h"
 
 class AttendanceRegister {
 private:

@@ -1,7 +1,7 @@
-#include "LabCourse.h"
+#include "courses/LabCourse.h"
 
-LabCourse::LabCourse(const std::string& code, const std::string& title, int credits, int capacity, int labHoursPerWeek)
-    : Course(code, title, credits, capacity), labHoursPerWeek(labHoursPerWeek) {}
+LabCourse::LabCourse(const std::string& code, const std::string& title, int credits, int labHoursPerWeek)
+    : Course(code, title, credits), labHoursPerWeek(labHoursPerWeek) {}
 
 LabCourse::~LabCourse() {}
 

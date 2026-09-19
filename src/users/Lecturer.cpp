@@ -1,21 +1,18 @@
-#include "Lecturer.h"
+#include "users/Lecturer.h"
 
 #include <algorithm>
 #include <iostream>
 
 using namespace std;
 
-int Lecturer::next_lecturer_num = 1001;
-
-
 // Constructor
 Lecturer::Lecturer(
-    //const string& user_Id,
+    const string& user_Id,
     const string& name,
     const string& username,
     const string& password
 )
-    : User(name, username, password)
+    : User(user_Id,name, username, password)
 {
 }
 
@@ -27,10 +24,10 @@ Lecturer::~Lecturer()
 
 
 // generate student id
-string Lecturer::generateLecturerId()
+/*string Lecturer::generateLecturerId()
 {
     return "LEC" + to_string(next_lecturer_num++);
-}
+}*/
 
 // Return role
 string Lecturer::getRole() const

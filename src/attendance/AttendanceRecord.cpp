@@ -1,5 +1,5 @@
-#include "AttendanceRecord.h"
-#include "AttendanceExceptions.h"
+#include "attendance/AttendanceRecord.h"
+#include "attendance/AttendanceExceptions.h"
 #include <stdexcept>
 
 using namespace std;

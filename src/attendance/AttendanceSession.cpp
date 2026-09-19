@@ -1,4 +1,4 @@
-#include "AttendanceSession.h"
+#include "attendance/AttendanceSession.h"
 #include "attendance/AttendanceExceptions.h"
 #include <stdexcept>
 
@@ -44,7 +44,7 @@ AttendanceSession::AttendanceSession(
 
     if (duration_minutes <= 0)
     {
-        throw InvalidAttendanceDataException((
+        throw InvalidAttendanceDataException(
             "Session duration must be greater than zero."
         );
     }

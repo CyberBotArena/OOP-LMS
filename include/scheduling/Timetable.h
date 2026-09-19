@@ -2,7 +2,7 @@
 #define TIMETABLE_H
 
 #include <vector>
-#include "Timeslot.h"
+#include "scheduling/Timeslot.h"
 
 class Timetable {
 private:
@@ -10,6 +10,8 @@ private:
 
 public:
     void addSlot(const TimeSlot& slot);
+
+    void removeSlot(const TimeSlot& slot);
 
     const std::vector<TimeSlot>& getSlots() const;
 
