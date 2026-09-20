@@ -40,7 +40,10 @@ private:
     void viewAllCourses() const;
     void createCourse();
     void createOffering();
+    void createUser();
+
     void addTimetableSlot();
+
 
     static std::string dayToString(Day day);
     static std::string minutesToTime(int minutes);

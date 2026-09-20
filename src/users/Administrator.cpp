@@ -37,6 +37,7 @@ void Administrator::getMenu() const {
         cout << "4. Create course\n";
         cout << "5. Create offering\n";
         cout << "6. Add timetable slot to offering\n";
+        cout << "7. Create new user\n";
         cout << "0. Logout\n";
 }
 

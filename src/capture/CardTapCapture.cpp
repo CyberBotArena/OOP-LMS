@@ -1,28 +1,36 @@
-#ifndef CARD_TAP_CAPTURE_H
-#define CARD_TAP_CAPTURE_H
 
-#include <string>
+#include "capture/CardTapCapture.h"
 
-#include "capture/AttendanceCapture.h"
-#include "capture/ConsoleCardReader.h"
+using namespace std;
 
-class CardTapCapture : public AttendanceCapture {
-private:
-    ConsoleCardReader reader;
-    bool capturing;
+CardTapCapture::CardTapCapture()
+    : capturing(false)
+{
+}
 
-public:
-    CardTapCapture();
+void CardTapCapture::beginSession(
+    const AttendanceSession& session)
+{
+    (void)session;
+    capturing = true;
+}
 
-    void beginSession(
-        const AttendanceSession& session
-    ) override;
+string CardTapCapture::captureNext()
+{
+    if (!capturing)
+    {
+        return "";
+    }
 
-    std::string captureNext() override;
+    return reader.readCard();
+}
 
-    void endSession() override;
+void CardTapCapture::endSession()
+{
+    capturing = false;
+}
 
-    std::string getMethodName() const override;
-};
-
-#endif
+string CardTapCapture::getMethodName() const
+{
+    return "CardTap";
+}

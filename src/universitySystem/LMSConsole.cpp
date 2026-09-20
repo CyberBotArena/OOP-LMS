@@ -16,6 +16,7 @@
 #include "attendance/AttendanceRegister.h"
 #include "attendance/AttendanceService.h"
 #include "capture/FileReplayCapture.h"
+#include "capture/CardTapCapture.h"
 
 using namespace std;
 
@@ -393,6 +394,7 @@ void LMSConsole::manageAttendanceSession(Lecturer& lecturer)
 
             cout << "Attendance session closed successfully.\n";
         }
+
         else if (choice != 0)
         {
             cout << "Invalid choice.\n";
@@ -422,7 +424,8 @@ void LMSConsole::manageAttendanceRecords(Lecturer& lecturer)
 
     AttendanceRegister& attendance = offering->getAttendanceRegister();
     cout << "\n1. Mark attendance using file replay\n";
-    cout << "2. Correct an attendance record\n";
+    cout << "2. Mark attendance using card tap\n";
+    cout << "3. Correct an attendance record\n";
     cout << "0. Back\nEnter choice: ";
     int choice;
     if (!readInteger(choice))
@@ -454,7 +457,39 @@ void LMSConsole::manageAttendanceRecords(Lecturer& lecturer)
             service.runCapture(*session);
             cout << "File replay completed.\n";
         }
+        
         else if (choice == 2)
+        {
+            string sessionId;
+        
+            cout << "Session ID: ";
+            cin >> sessionId;
+        
+            AttendanceSession* session =
+                attendance.findSession(sessionId);
+        
+            if (session == nullptr || !session->isOpen())
+            {
+                cout << "Session not found, closed, or expired.\n";
+                return;
+            }
+        
+            CardTapCapture capture;
+        
+            AttendanceService service(&attendance);
+            service.setCapture(&capture);
+        
+            cout << "\nCard-tap attendance started.\n";
+            cout << "Enter each student's ID when prompted.\n";
+            cout << "Enter END to finish.\n\n";
+            cin.ignore(10000, '\n');
+        
+            service.runCapture(*session);
+        
+            cout << "Card-tap attendance completed.\n";
+        }
+
+        else if (choice == 3)
         {
             const vector<AttendanceRecord>& records = attendance.getRecords();
             if (records.empty())
@@ -576,6 +611,91 @@ void LMSConsole::createCourse()
     catch (const exception& e) { cout << "Failed to create course: " << e.what() << '\n'; }
 }
 
+void LMSConsole::createUser()
+{
+    string userId;
+    string name;
+    string username;
+    string password;
+    int role;
+
+    cout << "\n===== Create User =====\n";
+
+    cout << "Enter User ID: ";
+    cin >> userId;
+
+    if (userId.empty())
+    {
+        cout << "User ID cannot be empty.\n";
+        return;
+    }
+
+    if (system.findUser(userId) != nullptr)
+    {
+        cout << "User ID already exists.\n";
+        return;
+    }
+
+    cout << "Enter Name: ";
+    cin >> ws;
+    getline(cin, name);
+
+    cout << "Enter Username: ";
+    cin >> username;
+
+    cout << "Enter Password: ";
+    cin >> password;
+
+    cout << "\nSelect Role:\n";
+    cout << "1. Student\n";
+    cout << "2. Lecturer\n";
+    cout << "3. Administrator\n";
+    cout << "Choice: ";
+    cin >> role;
+
+    User* newUser = nullptr;
+
+    switch (role)
+    {
+        case 1:
+            newUser = new Student(
+                userId, name, username, password
+            );
+            break;
+
+        case 2:
+            newUser = new Lecturer(
+                userId, name, username, password
+            );
+            break;
+
+        case 3:
+            newUser = new Administrator(
+                userId, name, username, password
+            );
+            break;
+
+        default:
+            cout << "Invalid role.\n";
+            return;
+    }
+
+    try
+    {
+        system.addUser(newUser);
+        cout << "User created successfully.\n";
+    }
+    catch (const exception& e)
+    {
+        // Use this delete only if addUser() does not
+        // take ownership when insertion fails.
+        delete newUser;
+
+        cout << "Failed to create user: "
+             << e.what() << endl;
+    }
+}
+
 void LMSConsole::createOffering()
 {
     string offeringId, courseCode, semester, lecturerId;
@@ -668,7 +788,7 @@ void LMSConsole::runLecturerMenu(Lecturer& lecturer)
             break;
             case 4: manageAttendanceRecords(lecturer); break;
             case 5: viewAttendanceReport(lecturer); break;
-            case 6: system.logout(); cout << "Logged out successfully.\n"; break;
+            case 0: system.logout(); cout << "Logged out successfully.\n"; break;
             default: cout << "Invalid menu choice.\n";
         }
     }
@@ -690,6 +810,7 @@ void LMSConsole::runAdministratorMenu(Administrator& admin)
             case 4: createCourse(); break;
             case 5: createOffering(); break;
             case 6: addTimetableSlot(); break;
+            case 7: createUser(); break;
             case 0: system.logout(); cout << "Logged out successfully.\n"; break;
             default: cout << "Invalid menu choice.\n";
         }
@@ -698,8 +819,6 @@ void LMSConsole::runAdministratorMenu(Administrator& admin)
 
 void LMSConsole::run()
 {
-    createTestData();
-
     while (true)
     {
         cout << "\n================================\n       UNIVERSITY LMS\n================================\n";

@@ -2,6 +2,8 @@
 #include "attendance/AttendanceExceptions.h"
 #include <stdexcept>
 #include <string>
+#include <iostream>
+
 
 using namespace std;
 
@@ -25,6 +27,7 @@ void AttendanceService::setCapture(
 
 
 // Run the selected attendance capture mechanism
+
 void AttendanceService::runCapture(
     AttendanceSession& session)
 {
@@ -42,28 +45,43 @@ void AttendanceService::runCapture(
         );
     }
 
-    // Start capture
     capture->beginSession(session);
 
-    string student_ID = capture->captureNext();
-
-    while (!student_ID.empty())
+    try
     {
-        string record_ID =
-            "RECORD" + to_string(next_record_number);
+        string student_ID = capture->captureNext();
 
-        attendance_register->markPresent(
-            record_ID,
-            student_ID,
-            session.getId(),
-            capture->getMethodName()
-        );
+        while (!student_ID.empty())
+        {
+            string record_ID =
+                "RECORD" + to_string(next_record_number);
 
-        next_record_number++;
+            try
+            {
+                attendance_register->markPresent(
+                    record_ID,
+                    student_ID,
+                    session.getId(),
+                    capture->getMethodName()
+                );
 
-        student_ID = capture->captureNext();
+                next_record_number++;
+            }
+            catch (const AttendanceException& e)
+            {
+                cout << "Attendance failed for "
+                     << student_ID << ": "
+                     << e.what() << '\n';
+            }
+
+            student_ID = capture->captureNext();
+        }
+    }
+    catch (...)
+    {
+        capture->endSession();
+        throw;
     }
 
-    // Finish capture
     capture->endSession();
 }
