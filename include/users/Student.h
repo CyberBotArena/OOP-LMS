@@ -15,9 +15,6 @@ private:
 
     Timetable personalTimetable;
     
-    //static int next_student_num;
-
-    //static std::string generateStudentId();
 
 
 

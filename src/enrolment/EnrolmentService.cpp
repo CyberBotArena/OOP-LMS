@@ -30,21 +30,7 @@ void EnrolmentService::enrol(
 
 
     // 3. Check prerequisites
-    //
-    // We will add this after connecting the Course class.
-    //
-    // Example logic will eventually be:
-    //
-    // Course* course = offering.getCourse();
-    //
-    // for (const string& prerequisite :
-    //      course->getPrerequisites())
-    // {
-    //     if (!student.hasCompletedCourse(prerequisite))
-    //     {
-    //         throw PrerequisiteNotMetException(...);
-    //     }
-    // }
+    // add this at the end
 
 
     // 4. Check timetable clash

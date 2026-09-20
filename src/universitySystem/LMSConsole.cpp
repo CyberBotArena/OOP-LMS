@@ -83,30 +83,6 @@ int LMSConsole::timeToMinutes(const string& time)
     return hours * 60 + minutes;
 }
 
-void LMSConsole::createTestData()
-{
-    Student* student = new Student(system.generateUserId(), "Kamal Perera", "kamal", "1234");
-    Lecturer* lecturer = new Lecturer(system.generateUserId(), "Nimal Silva", "nimal", "1234");
-    Administrator* admin = new Administrator(system.generateUserId(), "Admin User", "admin", "admin123");
-
-    system.addUser(student);
-    system.addUser(lecturer);
-    system.addUser(admin);
-
-    LectureCourse* course = new LectureCourse("CS101", "Programming Fundamentals", 3);
-    system.addCourse(course);
-
-    CourseOffering* offering = new CourseOffering("OFF001", "Semester 1 - 2026", 30);
-    offering->setCourse(course);
-    offering->setLecturer(lecturer);
-    lecturer->assignCourse(course->getCode());
-    system.addOffering(offering);
-
-    cout << "\nTest data created successfully.\n";
-    cout << "Student ID: " << student->getUserId() << " | Password: 1234\n";
-    cout << "Lecturer ID: " << lecturer->getUserId() << " | Password: 1234\n";
-    cout << "Administrator ID: " << admin->getUserId() << " | Password: admin123\n";
-}
 
 void LMSConsole::viewAvailableOfferings() const
 {
@@ -297,6 +273,48 @@ void LMSConsole::viewEnrolmentList(const Lecturer& lecturer) const
     for (const Student* student : students)
         cout << student->getUserId() << " | " << student->getName() << '\n';
 }*/
+
+
+void LMSConsole::dropCourse(Student& student)
+{
+    string offeringId;
+
+    cout << "\n===== DROP COURSE =====\n";
+
+    // Show the student's existing enrolments
+    viewMyEnrolments(student);
+
+    cout << "\nEnter offering ID to drop: ";
+    cin >> offeringId;
+
+    CourseOffering* offering =
+        system.findOffering(offeringId);
+
+    if (offering == nullptr)
+    {
+        cout << "Offering not found.\n";
+        return;
+    }
+
+    if (!student.isEnrolledIn(offeringId))
+    {
+        cout << "You are not enrolled in this offering.\n";
+        return;
+    }
+
+    try
+    {
+        // Use your existing enrolment service
+        enrolmentService.drop(student, *offering);
+
+        cout << "Course dropped successfully.\n";
+    }
+    catch (const exception& e)
+    {
+        cout << "Failed to drop course: "
+             << e.what() << '\n';
+    }
+}
 
 void LMSConsole::manageAttendanceSession(Lecturer& lecturer)
 {
@@ -763,6 +781,7 @@ void LMSConsole::runStudentMenu(Student& student)
             case 2: enrolStudent(student); break;
             case 3: viewMyEnrolments(student); break;
             case 4: viewMyTimetable(student); break;
+            case 5: dropCourse(student); break;
             case 0: system.logout(); cout << "Logged out successfully.\n"; break;
             default: cout << "Invalid menu choice.\n";
         }

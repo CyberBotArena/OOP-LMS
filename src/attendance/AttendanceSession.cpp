@@ -18,7 +18,7 @@ AttendanceSession::AttendanceSession(
       open_by_lecturer_ID(lecturer_ID),
       opened_at(chrono::system_clock::now()),
       expires_at(opened_at + chrono::minutes(duration_minutes)),
-      open(true),
+      open(false),
       slot(slot)
 {
     if (session_ID.empty())

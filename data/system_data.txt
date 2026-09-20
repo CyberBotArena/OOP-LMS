@@ -1,27 +1,24 @@
 [USERS]
-Lecturer|LEC001|SIRIL|SIRL|1234
-Student|ST001|NImsara|keshan|1234
-Student|ST002|HIruni Prathibha|hiruni|1234
-Student|U1001|Kamal Perera|kamal|1234
-Lecturer|U1002|Nimal Silva|nimal|1234
-Administrator|U1003|Admin User|admin|admin123
+Administrator|ADM001|Admin User|admin|admin123
+Lecturer|LEC001|Dr.Nimal airipala|Nimal|1234
+Lecturer|LEC002|Nimal Silva|Nimal|1234
+Student|ST001|Nimsara Keshan|Nimsara|1234
+Student|ST002|HIruni Prathibha|Hiruni|1234
+Student|ST003|Kamal Perera|kamal|1234
 
 [COURSES]
 Lecture|CS101|Programming Fundamentals|3|
-Lecture|CS102|algorythm|3|
+Lecture|CS102|Data Structure |3|
+Lecture|CS103|Programming|3|
 
 [OFFERINGS]
-OFF001|Semester 1 - 2026|30|CS101|U1002
-OFF002|3 2026|30|CS102|LEC001
 
 [TIMETABLES]
-OFF001|0|540|660|Room A
-OFF002|0|600|720|Room B
+
 
 [ENROLMENTS]
-OFF001|U1001
+
 
 [ATTENDANCE_SESSIONS]
 
 [ATTENDANCE_RECORDS]
-

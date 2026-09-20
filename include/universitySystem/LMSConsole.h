@@ -17,14 +17,13 @@ private:
     UniversitySystem& system;
     EnrolmentService enrolmentService;
 
-    void createTestData();
-
     void runStudentMenu(Student& student);
     void runLecturerMenu(Lecturer& lecturer);
     void runAdministratorMenu(Administrator& admin);
 
     void viewAvailableOfferings() const;
     void enrolStudent(Student& student);
+    void dropCourse(Student& student);
     void viewMyEnrolments(const Student& student) const;
     void viewMyTimetable(const Student& student) const;
 

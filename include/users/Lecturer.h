@@ -10,9 +10,6 @@ class Lecturer : public User {
 private:
     std::vector<std::string> assignedCourseCodes;
 
-    //static int next_lecturer_num;
-
-    //static std::string generateLecturerId();
 
 public:
     Lecturer(

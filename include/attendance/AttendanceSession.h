@@ -34,9 +34,9 @@ public:
     bool isOpen() const;
 
     const std::string& getLecturerId() const;
-const TimeSlot& getSlot() const;
-std::chrono::system_clock::time_point getOpenedAt() const;
-std::chrono::system_clock::time_point getExpiresAt() const;
+    const TimeSlot& getSlot() const;
+    std::chrono::system_clock::time_point getOpenedAt() const;
+    std::chrono::system_clock::time_point getExpiresAt() const;
 
     void close();
 };

@@ -5,7 +5,6 @@
 
 using namespace std;
 
-//int Student::next_student_num = 1001;
 
 // Constructor
 Student::Student(
@@ -24,11 +23,6 @@ Student::~Student()
 {
 }
 
-// generate student id
-/*string Student::generateStudentId()
-{
-    return "ST" + std::to_string(next_student_num++);
-}*/
 
 // Return role
 string Student::getRole() const
@@ -53,6 +47,7 @@ void Student::getMenu() const
         cout << "2. Enrol in an offering\n";
         cout << "3. View my enrolments\n";
         cout << "4. View my timetable\n";
+        cout << "5. Drop course\n";
         cout << "0. Logout\n";
 
 }
